@@ -19,9 +19,9 @@ import lombok.Setter;
 public class Disciplina {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private int id;
 
   @NotNull
   @Size(min = 3, max = 50)
-  private String name;
+  private String nome;
 }

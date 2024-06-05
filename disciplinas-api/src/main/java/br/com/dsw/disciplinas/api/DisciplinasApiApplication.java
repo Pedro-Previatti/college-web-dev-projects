@@ -1,4 +1,4 @@
-package br.com.dsw.disciplinas.api.disciplinas_api;
+package br.com.dsw.disciplinas.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

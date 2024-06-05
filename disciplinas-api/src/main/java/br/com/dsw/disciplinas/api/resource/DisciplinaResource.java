@@ -2,10 +2,13 @@ package br.com.dsw.disciplinas.api.resource;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -29,13 +32,19 @@ public class DisciplinaResource {
     return disciplinaRepository.findAll();
   }
 
+  @GetMapping("/{id}")
+  public Optional<Disciplina> buscaPeloCodigo(@PathVariable Long id) {
+    return disciplinaRepository.findById(id);
+  }
+
   @PostMapping()
   @ResponseStatus(HttpStatus.CREATED)
-  public void criar(@RequestBody Disciplina disciplina, HttpServletResponse response) {
+  public ResponseEntity<Disciplina> criar(@RequestBody Disciplina disciplina, HttpServletResponse response) {
     Disciplina disciplinaGravada = disciplinaRepository.save(disciplina);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
         .buildAndExpand(disciplinaGravada.getId()).toUri();
     response.setHeader("Location", uri.toASCIIString());
+    return ResponseEntity.created(uri).body(disciplinaGravada);
   }
 
 }
